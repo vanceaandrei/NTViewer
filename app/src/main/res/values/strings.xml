@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">NTViewer</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_edit_mode">Map</string>
+    <string name="dialog_btn_ok">OK</string>
+    <string name="dialog_btn_cancel">Cancel</string>
+    <string name="ip_set_dialog_title">Set Address</string>
+
+    <!--Components-->
+
+</resources>
