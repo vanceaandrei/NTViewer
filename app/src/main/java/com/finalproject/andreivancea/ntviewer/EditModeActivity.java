@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class EditModeActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -76,6 +77,7 @@ public class EditModeActivity extends FragmentActivity implements OnMapReadyCall
         mMap.setOnMyLocationButtonClickListener(new MyLastLocationButtonClickListener(this, mMap, mGoogleApiClient, mLastLocation));
         mMap.setOnMapLongClickListener(new AddMarkerOnLongClickListener(this, mMap));
         mMap.setOnMarkerClickListener(new ShowSnackBarOnMarkerClickListener(this));
+        addMarkers();
     }
 
     @Override
@@ -116,6 +118,12 @@ public class EditModeActivity extends FragmentActivity implements OnMapReadyCall
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
+        }
+    }
+
+    private void addMarkers() {
+        for (MarkerOptions marker : NTViewerApplication.getInstance().getMarkers()) {
+            mMap.addMarker(marker);
         }
     }
 }
