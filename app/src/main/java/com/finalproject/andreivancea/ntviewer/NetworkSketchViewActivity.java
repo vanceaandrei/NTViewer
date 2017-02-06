@@ -44,5 +44,4 @@ public class NetworkSketchViewActivity extends AppCompatActivity implements View
         return true;
     }
 
-
 }

@@ -3,9 +3,11 @@ package com.finalproject.andreivancea.ntviewer.listeners;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.finalproject.andreivancea.ntviewer.NTViewerApplication;
 import com.finalproject.andreivancea.ntviewer.dialogs.IPSetDialog;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -38,6 +40,8 @@ public class AddMarkerOnLongClickListener implements GoogleMap.OnMapLongClickLis
 
     @Override
     public void onDialogPositiveClick(String ipAddress) {
-        mMap.addMarker(new MarkerOptions().position(choosedLocation).title(ipAddress));
+        MarkerOptions marker = new MarkerOptions().position(choosedLocation).title(ipAddress);
+        mMap.addMarker(marker);
+        NTViewerApplication.getInstance().saveMarker(marker);
     }
 }

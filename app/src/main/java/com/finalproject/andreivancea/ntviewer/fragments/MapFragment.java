@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.finalproject.andreivancea.ntviewer.NTViewerApplication;
 import com.finalproject.andreivancea.ntviewer.R;
 import com.finalproject.andreivancea.ntviewer.listeners.MyLastLocationButtonClickListener;
 import com.finalproject.andreivancea.ntviewer.util.Const;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by andrei.vancea on 1/30/2017.
@@ -59,6 +61,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
         mMap.animateCamera(cameraUpdate);
         if (!enableMyLocation()) return;
         mMap.setOnMyLocationButtonClickListener(new MyLastLocationButtonClickListener(getActivity(), mMap, mGoogleApiClient, mLastLocation));
+        addMarkers();
+    }
+
+    private void addMarkers() {
+        for (MarkerOptions marker : NTViewerApplication.getInstance().getMarkers()) {
+            mMap.addMarker(marker);
+        }
     }
 
     @Override
