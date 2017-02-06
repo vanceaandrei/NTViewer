@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private ImageView editModeButton;
-    private ImageView button2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        editModeButton = (ImageView) findViewById(R.id.imageView6);
-        button2 = (ImageView) findViewById(R.id.imageView7);
+        ImageView editModeButton = (ImageView) findViewById(R.id.imageView6);
+        ImageView button2 = (ImageView) findViewById(R.id.imageView7);
 
         editModeButton.setOnClickListener(new EditModeButtonOnClickListener(this));
         requestLocationPermissionsIfNeeded();

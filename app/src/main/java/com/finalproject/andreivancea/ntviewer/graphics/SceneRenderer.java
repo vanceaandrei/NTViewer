@@ -9,11 +9,15 @@ import android.view.MotionEvent;
 import com.finalproject.andreivancea.ntviewer.R;
 
 import org.rajawali3d.Camera;
+import org.rajawali3d.Object3D;
 import org.rajawali3d.lights.DirectionalLight;
+import org.rajawali3d.loader.LoaderOBJ;
+import org.rajawali3d.loader.ParsingException;
 import org.rajawali3d.materials.Material;
 import org.rajawali3d.materials.methods.DiffuseMethod;
 import org.rajawali3d.materials.textures.ATexture;
 import org.rajawali3d.materials.textures.Texture;
+import org.rajawali3d.materials.textures.TextureManager;
 import org.rajawali3d.math.vector.Vector3;
 import org.rajawali3d.primitives.Cube;
 import org.rajawali3d.primitives.Line3D;
@@ -31,42 +35,37 @@ public class SceneRenderer extends RajawaliRenderer {
     private static final String TAG = "SceneRenderer";
 
     private Context context;
-    private DirectionalLight directionalLight;
-    private Sphere earthSphere;
     private Cube cube;
 
     private float xStartPos;
-    private float xPos;
     private float yStartPos;
-    private float yPos;
-    private float xOffset;
     private Camera mCamera;
     private float cLookLastX;
     private float cLookLastY;
 
     private Vector3 cLookAt;
-    private Vector3 cameraCoords;
 
     private Line3D cross;
 
     public SceneRenderer(Context context) {
         super(context);
-        this.context = context;
         setFrameRate(60);
+        this.context = context;
     }
 
     @Override
     protected void initScene() {
 
+
         //------LIGHT------
-        directionalLight = new DirectionalLight(1.0f, 0.2f, -1.0f);
+        DirectionalLight directionalLight = new DirectionalLight(1.0f, 0.2f, -1.0f);
         directionalLight.setColor(1.0f, 1.0f, 1.0f);
         directionalLight.setPower(2.0f);
         getCurrentScene().addLight(directionalLight);
         //-----------------
 
         //------CAMERA-----
-        cameraCoords = new Vector3(0f, 3f, 5.2f);
+        Vector3 cameraCoords = new Vector3(0f, 3f, 5.2f);
         getCurrentCamera().setPosition(cameraCoords);
         getCurrentCamera().setLookAt(0.0f, 0.0f, -4.0f);
         mCamera = getCurrentCamera();
@@ -94,7 +93,7 @@ public class SceneRenderer extends RajawaliRenderer {
         //-------------------
 
         //------OBJECTS-----
-        earthSphere = new Sphere(1, 24, 24);
+        Sphere earthSphere = new Sphere(1, 24, 24);
         earthSphere.setMaterial(material);
         earthSphere.setPosition(0, 0, -8f);
         getCurrentScene().addChild(earthSphere);
@@ -115,6 +114,8 @@ public class SceneRenderer extends RajawaliRenderer {
 
         drawCube(new Vector3(0, 0, 15f), greenMaterial);
         drawCube(new Vector3(0, 4f, 15f), blueMaterial);
+        drawCross(new Vector3(-1, 0, -2), blueMaterial);
+
         //-----------------
     }
 
@@ -146,12 +147,12 @@ public class SceneRenderer extends RajawaliRenderer {
 
     @Override
     public void onTouchEvent(MotionEvent event) {
+        float xPos;
+        float yPos;
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             //pointer positions
             xStartPos = event.getX();
-            xPos = xStartPos;
             yStartPos = event.getY();
-            yPos = yStartPos;
             cLookLastX = xStartPos;
             cLookLastY = yStartPos;
         }
@@ -227,5 +228,4 @@ public class SceneRenderer extends RajawaliRenderer {
         getCurrentScene().addChild(cube);
         return cube;
     }
-
 }
