@@ -13,5 +13,6 @@
     <!--Buttons-->
     <string name="btn_edit_mode">Edit Mode</string>
     <string name="btn_edit_markers">Edit Markers</string>
+    <string name="view_markers_activity_name">Servers</string>
 
 </resources>

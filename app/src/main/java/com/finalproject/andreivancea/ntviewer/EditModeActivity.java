@@ -15,7 +15,6 @@ import android.util.Log;
 import com.finalproject.andreivancea.ntviewer.listeners.AddMarkerOnLongClickListener;
 import com.finalproject.andreivancea.ntviewer.listeners.MyLastLocationButtonClickListener;
 import com.finalproject.andreivancea.ntviewer.listeners.ShowSnackBarOnMarkerClickListener;
-import com.finalproject.andreivancea.ntviewer.util.Const;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -32,6 +31,7 @@ import java.util.Map;
 public class EditModeActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static final String TAG = "EditModeActivity";
+    private static final LatLng DEFAULT_STARTING_LOCATION = new LatLng(46, 24);
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -75,7 +75,7 @@ public class EditModeActivity extends FragmentActivity implements OnMapReadyCall
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(Const.DEFAULT_STARTING_LOCATION, 5);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_STARTING_LOCATION, 5);
         mMap.animateCamera(cameraUpdate);
         if (!enableMyLocation()) return;
         mMap.setOnMyLocationButtonClickListener(new MyLastLocationButtonClickListener(this, mMap, mGoogleApiClient, mLastLocation));
@@ -126,10 +126,8 @@ public class EditModeActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     private void addMarkers() {
-
         SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.shared_preferences_file), Context.MODE_PRIVATE);
         Map<String, ?> markers = sharedPreferences.getAll();
-
         for (String ipAddress : markers.keySet()) {
             String[] latLng = ((String) markers.get(ipAddress)).split(",");
             mMap.addMarker(new MarkerOptions().title(ipAddress).position(new LatLng(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1]))));

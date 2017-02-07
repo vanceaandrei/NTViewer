@@ -15,10 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.finalproject.andreivancea.ntviewer.NTViewerApplication;
 import com.finalproject.andreivancea.ntviewer.R;
 import com.finalproject.andreivancea.ntviewer.listeners.MyLastLocationButtonClickListener;
-import com.finalproject.andreivancea.ntviewer.util.Const;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,6 +37,7 @@ import java.util.Map;
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "MapFragment";
+    private static final LatLng DEFAULT_STARTING_LOCATION = new LatLng(46, 24);
 
     private MapView mapView;
     private GoogleMap mMap;
@@ -61,7 +60,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(Const.DEFAULT_STARTING_LOCATION, 5);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_STARTING_LOCATION, 5);
         mMap.animateCamera(cameraUpdate);
         if (!enableMyLocation()) return;
         mMap.setOnMyLocationButtonClickListener(new MyLastLocationButtonClickListener(getActivity(), mMap, mGoogleApiClient, mLastLocation));
@@ -143,7 +142,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
     }
 
     private void addMarkers() {
-
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getResources().getString(R.string.shared_preferences_file), Context.MODE_PRIVATE);
         Map<String, ?> markers = sharedPreferences.getAll();
 

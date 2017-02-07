@@ -31,7 +31,12 @@
                 android:text="Position"
                 android:textSize="12sp" />
 
-
+            <TextView
+                android:id="@+id/active"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <ImageView
