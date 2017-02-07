@@ -41,8 +41,12 @@
         </activity>
         <activity
             android:name=".EditModeActivity"
-            android:label="@string/title_activity_edit_mode"></activity>
-        <activity android:name=".NetworkSketchViewActivity"></activity>
+            android:label="@string/title_activity_edit_mode" />
+        <activity android:name=".NetworkSketchViewActivity" />
+        <activity
+            android:name=".MarkerListActivity"
+            android:label="@string/title_activity_marker_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

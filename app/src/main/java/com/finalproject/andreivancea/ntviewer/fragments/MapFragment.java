@@ -1,6 +1,8 @@
 package com.finalproject.andreivancea.ntviewer.fragments;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -27,6 +29,8 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Map;
 
 /**
  * Created by andrei.vancea on 1/30/2017.
@@ -62,12 +66,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
         if (!enableMyLocation()) return;
         mMap.setOnMyLocationButtonClickListener(new MyLastLocationButtonClickListener(getActivity(), mMap, mGoogleApiClient, mLastLocation));
         addMarkers();
-    }
-
-    private void addMarkers() {
-        for (MarkerOptions marker : NTViewerApplication.getInstance().getMarkers()) {
-            mMap.addMarker(marker);
-        }
     }
 
     @Override
@@ -142,5 +140,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleA
         }
         mMap.setMyLocationEnabled(true);
         return true;
+    }
+
+    private void addMarkers() {
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getResources().getString(R.string.shared_preferences_file), Context.MODE_PRIVATE);
+        Map<String, ?> markers = sharedPreferences.getAll();
+
+        for (String ipAddress : markers.keySet()) {
+            String[] latLng = ((String) markers.get(ipAddress)).split(",");
+            mMap.addMarker(new MarkerOptions().title(ipAddress).position(new LatLng(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1]))));
+        }
     }
 }

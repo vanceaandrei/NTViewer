@@ -1,6 +1,8 @@
 package com.finalproject.andreivancea.ntviewer;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Map;
 
 public class EditModeActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -122,8 +126,13 @@ public class EditModeActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     private void addMarkers() {
-        for (MarkerOptions marker : NTViewerApplication.getInstance().getMarkers()) {
-            mMap.addMarker(marker);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.shared_preferences_file), Context.MODE_PRIVATE);
+        Map<String, ?> markers = sharedPreferences.getAll();
+
+        for (String ipAddress : markers.keySet()) {
+            String[] latLng = ((String) markers.get(ipAddress)).split(",");
+            mMap.addMarker(new MarkerOptions().title(ipAddress).position(new LatLng(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1]))));
         }
     }
 }

@@ -9,15 +9,11 @@ import android.view.MotionEvent;
 import com.finalproject.andreivancea.ntviewer.R;
 
 import org.rajawali3d.Camera;
-import org.rajawali3d.Object3D;
 import org.rajawali3d.lights.DirectionalLight;
-import org.rajawali3d.loader.LoaderOBJ;
-import org.rajawali3d.loader.ParsingException;
 import org.rajawali3d.materials.Material;
 import org.rajawali3d.materials.methods.DiffuseMethod;
 import org.rajawali3d.materials.textures.ATexture;
 import org.rajawali3d.materials.textures.Texture;
-import org.rajawali3d.materials.textures.TextureManager;
 import org.rajawali3d.math.vector.Vector3;
 import org.rajawali3d.primitives.Cube;
 import org.rajawali3d.primitives.Line3D;
